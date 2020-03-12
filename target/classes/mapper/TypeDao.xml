@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lgzf.dao.TypeDao">
+
+    <insert id="saveType" parameterType="com.lgzf.pojo.Type">
+         insert into blog.t_type values (#{id},#{name});
+    </insert>
+
+    <select id="getTypeById" resultType="com.lgzf.pojo.Type">
+        select id,name from blog.t_type where id = #{id}
+    </select>
+
+    <select id="getTypeByName" resultType="com.lgzf.pojo.Type">
+        select * from blog.t_type where name = #{name}
+    </select>
+
+    <!--两个id可能会相冲，取别名即可-->
+    <resultMap id="type" type="com.lgzf.pojo.Type">
+        <id property="id" column="tid"/>
+        <result property="name" column="name"/>
+        <collection property="blogs" ofType="com.lgzf.pojo.Blog">
+            <id property="id" column="bid"/>
+            <result property="title" column="title"/>
+            <result property="typeId" column="type_id"/>
+        </collection>
+    </resultMap>
+
+    <select id="getAllType" resultType="com.lgzf.pojo.Type">
+        SELECT * FROM t_type
+    </select>
+
+    <select id="getAllTypeNum" resultMap="type">
+        select t.id tid, t.name, b.id bid, b.title,b.type_id from blog.t_type t,blog.t_blog b where t.id = b.type_id
+    </select>
+
+    <delete id="deleteType" >
+        delete from blog.t_type where id = #{id}
+    </delete>
+
+    <update id="updateType" parameterType="com.lgzf.pojo.Type">
+        update blog.t_type set name = #{name} where id = #{id};
+    </update>
+
+</mapper>
