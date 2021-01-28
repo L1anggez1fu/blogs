@@ -26,5 +26,5 @@
 ​	
 ## 注
 
-基于b站up主S丶m1lence丶的[视频](https://www.bilibili.com/video/av72035869?spm_id_from=444.41.b_62696c692d6865616465722d6d.21)
+参考b站up主[视频](https://www.bilibili.com/video/av72035869?spm_id_from=444.41.b_62696c692d6865616465722d6d.21)
 
