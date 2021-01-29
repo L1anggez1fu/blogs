@@ -24,7 +24,14 @@
 - MySQL 8.0.18
 
 ## 项目demo
-![image](https://github.com/doublecharacters/blogs/blob/master/demo.PNG)
+### 博客主页
+![image](https://github.com/doublecharacters/blogs/blob/master/Image/index_demo.PNG)
+### 博客详情页
+![image](https://github.com/doublecharacters/blogs/blob/master/Image/blog_demo.PNG)
+### 博客后台
+![image](https://github.com/doublecharacters/blogs/blob/master/Image/admin_demo.PNG)
+### 关于我
+![image](https://github.com/doublecharacters/blogs/blob/master/Image/aboutme_demo.PNG)
 
 ​	
 ## 注
