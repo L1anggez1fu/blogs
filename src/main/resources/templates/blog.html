@@ -14,10 +14,10 @@
 </head>
 <body>
 <!-- 导航   -->
-<nav class="ui inverted segment attached segment m-padded-tb-mini m-shadow-small">
+<nav th:replace="_fragments :: menu(1)" class="ui inverted segment attached segment m-padded-tb-mini m-shadow-small">
     <div class="ui container">
         <div class="ui inverted menu secondary stackable">
-            <h2 class="ui teal header item">两个字符's blog</h2>
+            <h2 class="ui teal header item">Blog</h2>
             <a href="#" class="m-item item m-mobile-hide"><i class="mini m-margin-left home icon"></i>首页</a>
             <a href="#" class="m-item item m-mobile-hide"><i class="mini m-margin-left idea icon"></i>分类</a>
             <a href="#" class="m-item item m-mobile-hide"><i class="mini m-margin-left tags icon"></i>标签</a>
@@ -25,7 +25,7 @@
             <a href="#" class="m-item item m-mobile-hide"><i class="mini m-margin-left info icon"></i>关于我</a>
             <div class="right m-item item m-mobile-hide">
                 <div class="ui icon input">
-                    <input type="text" placeholder="Search..">
+                    <input type="text" placeholder="Seacrch..">
                     <i class="search link icon"></i>
                 </div>
             </div>
