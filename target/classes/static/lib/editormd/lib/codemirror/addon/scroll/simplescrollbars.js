@@ -1,14 +1,14 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
 
-(function(mod) {
+(function (mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
     mod(require("../../lib/codemirror"));
   else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror"], mod);
   else // Plain browser env
     mod(CodeMirror);
-})(function(CodeMirror) {
+})(function (CodeMirror) {
   "use strict";
 
   function Bar(cls, orientation, scroll) {
@@ -22,24 +22,27 @@
     this.inner = this.node.appendChild(document.createElement("div"));
 
     var self = this;
-    CodeMirror.on(this.inner, "mousedown", function(e) {
+    CodeMirror.on(this.inner, "mousedown", function (e) {
       if (e.which != 1) return;
       CodeMirror.e_preventDefault(e);
       var axis = self.orientation == "horizontal" ? "pageX" : "pageY";
       var start = e[axis], startpos = self.pos;
+
       function done() {
         CodeMirror.off(document, "mousemove", move);
         CodeMirror.off(document, "mouseup", done);
       }
+
       function move(e) {
         if (e.which != 1) return done();
         self.moveTo(startpos + (e[axis] - start) * (self.total / self.size));
       }
+
       CodeMirror.on(document, "mousemove", move);
       CodeMirror.on(document, "mouseup", done);
     });
 
-    CodeMirror.on(this.node, "click", function(e) {
+    CodeMirror.on(this.node, "click", function (e) {
       CodeMirror.e_preventDefault(e);
       var innerBox = self.inner.getBoundingClientRect(), where;
       if (self.orientation == "horizontal")
@@ -55,30 +58,31 @@
       self.moveTo(self.pos + moved);
       if (self.pos != oldPos) CodeMirror.e_preventDefault(e);
     }
+
     CodeMirror.on(this.node, "mousewheel", onWheel);
     CodeMirror.on(this.node, "DOMMouseScroll", onWheel);
   }
 
-  Bar.prototype.moveTo = function(pos, update) {
+  Bar.prototype.moveTo = function (pos, update) {
     if (pos < 0) pos = 0;
     if (pos > this.total - this.screen) pos = this.total - this.screen;
     if (pos == this.pos) return;
     this.pos = pos;
     this.inner.style[this.orientation == "horizontal" ? "left" : "top"] =
-      (pos * (this.size / this.total)) + "px";
+        (pos * (this.size / this.total)) + "px";
     if (update !== false) this.scroll(pos, this.orientation);
   };
 
-  Bar.prototype.update = function(scrollSize, clientSize, barSize) {
+  Bar.prototype.update = function (scrollSize, clientSize, barSize) {
     this.screen = clientSize;
     this.total = scrollSize;
     this.size = barSize;
 
     // FIXME clip to min size?
     this.inner.style[this.orientation == "horizontal" ? "width" : "height"] =
-      this.screen * (this.size / this.total) + "px";
+        this.screen * (this.size / this.total) + "px";
     this.inner.style[this.orientation == "horizontal" ? "left" : "top"] =
-      this.pos * (this.size / this.total) + "px";
+        this.pos * (this.size / this.total) + "px";
   };
 
   function SimpleScrollbars(cls, place, scroll) {
@@ -90,7 +94,7 @@
     this.width = null;
   }
 
-  SimpleScrollbars.prototype.update = function(measure) {
+  SimpleScrollbars.prototype.update = function (measure) {
     if (this.width == null) {
       var style = window.getComputedStyle ? window.getComputedStyle(this.horiz.node) : this.horiz.node.currentStyle;
       if (style) this.width = parseInt(style.height);
@@ -104,13 +108,13 @@
 
     if (needsV) {
       this.vert.update(measure.scrollHeight, measure.clientHeight,
-                       measure.viewHeight - (needsH ? width : 0));
+          measure.viewHeight - (needsH ? width : 0));
       this.vert.node.style.display = "block";
       this.vert.node.style.bottom = needsH ? width + "px" : "0";
     }
     if (needsH) {
       this.horiz.update(measure.scrollWidth, measure.clientWidth,
-                        measure.viewWidth - (needsV ? width : 0) - measure.barLeft);
+          measure.viewWidth - (needsV ? width : 0) - measure.barLeft);
       this.horiz.node.style.right = needsV ? width + "px" : "0";
       this.horiz.node.style.left = measure.barLeft + "px";
     }
@@ -118,24 +122,24 @@
     return {right: needsV ? width : 0, bottom: needsH ? width : 0};
   };
 
-  SimpleScrollbars.prototype.setScrollTop = function(pos) {
+  SimpleScrollbars.prototype.setScrollTop = function (pos) {
     this.vert.moveTo(pos, false);
   };
 
-  SimpleScrollbars.prototype.setScrollLeft = function(pos) {
+  SimpleScrollbars.prototype.setScrollLeft = function (pos) {
     this.horiz.moveTo(pos, false);
   };
 
-  SimpleScrollbars.prototype.clear = function() {
+  SimpleScrollbars.prototype.clear = function () {
     var parent = this.horiz.node.parentNode;
     parent.removeChild(this.horiz.node);
     parent.removeChild(this.vert.node);
   };
 
-  CodeMirror.scrollbarModel.simple = function(place, scroll) {
+  CodeMirror.scrollbarModel.simple = function (place, scroll) {
     return new SimpleScrollbars("CodeMirror-simplescroll", place, scroll);
   };
-  CodeMirror.scrollbarModel.overlay = function(place, scroll) {
+  CodeMirror.scrollbarModel.overlay = function (place, scroll) {
     return new SimpleScrollbars("CodeMirror-overlayscroll", place, scroll);
   };
 });

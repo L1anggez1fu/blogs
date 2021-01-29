@@ -6,18 +6,18 @@
  * https://github.com/duralog/CodeMirror
  */
 
-(function(mod) {
+(function (mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
     mod(require("../../lib/codemirror"));
   else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror"], mod);
   else // Plain browser env
     mod(CodeMirror);
-})(function(CodeMirror) {
+})(function (CodeMirror) {
   "use strict";
 
-  CodeMirror.defineMode('livescript', function(){
-    var tokenBase = function(stream, state) {
+  CodeMirror.defineMode('livescript', function () {
+    var tokenBase = function (stream, state) {
       var next_rule = state.next || "start";
       if (next_rule) {
         state.next = state.next;
@@ -47,13 +47,13 @@
       return 'error';
     };
     var external = {
-      startState: function(){
+      startState: function () {
         return {
           next: 'start',
           lastToken: null
         };
       },
-      token: function(stream, state){
+      token: function (stream, state) {
         while (stream.pos == stream.start)
           var style = tokenBase(stream, state);
         state.lastToken = {
@@ -63,7 +63,7 @@
         };
         return style.replace(/\./g, ' ');
       },
-      indent: function(state){
+      indent: function (state) {
         var indentation = state.lastToken.indent;
         if (state.lastToken.content.match(indenter)) {
           indentation += 2;

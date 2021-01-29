@@ -1,14 +1,14 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
 
-(function(mod) {
+(function (mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
     mod(require("../../lib/codemirror"));
   else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror"], mod);
   else // Plain browser env
     mod(CodeMirror);
-})(function(CodeMirror) {
+})(function (CodeMirror) {
   "use strict";
 
   var noOptions = {};
@@ -20,7 +20,7 @@
     return found == -1 ? 0 : found;
   }
 
-  CodeMirror.commands.toggleComment = function(cm) {
+  CodeMirror.commands.toggleComment = function (cm) {
     var minLine = Infinity, ranges = cm.listSelections(), mode = null;
     for (var i = ranges.length - 1; i >= 0; i--) {
       var from = ranges[i].from(), to = ranges[i].to();
@@ -29,7 +29,10 @@
       minLine = from.line;
       if (mode == null) {
         if (cm.uncomment(from, to)) mode = "un";
-        else { cm.lineComment(from, to); mode = "line"; }
+        else {
+          cm.lineComment(from, to);
+          mode = "line";
+        }
       } else if (mode == "un") {
         cm.uncomment(from, to);
       } else {
@@ -38,7 +41,7 @@
     }
   };
 
-  CodeMirror.defineExtension("lineComment", function(from, to, options) {
+  CodeMirror.defineExtension("lineComment", function (from, to, options) {
     if (!options) options = noOptions;
     var self = this, mode = self.getModeAt(from);
     var commentString = options.lineComment || mode.lineComment;
@@ -55,7 +58,7 @@
     var pad = options.padding == null ? " " : options.padding;
     var blankLines = options.commentBlankLines || from.line == to.line;
 
-    self.operation(function() {
+    self.operation(function () {
       if (options.indent) {
         var baseString = firstLine.slice(0, firstNonWS(firstLine));
         for (var i = from.line; i < end; ++i) {
@@ -73,7 +76,7 @@
     });
   });
 
-  CodeMirror.defineExtension("blockComment", function(from, to, options) {
+  CodeMirror.defineExtension("blockComment", function (from, to, options) {
     if (!options) options = noOptions;
     var self = this, mode = self.getModeAt(from);
     var startString = options.blockCommentStart || mode.blockCommentStart;
@@ -90,7 +93,7 @@
     var pad = options.padding == null ? " " : options.padding;
     if (from.line > end) return;
 
-    self.operation(function() {
+    self.operation(function () {
       if (options.fullLines != false) {
         var lastLineHasText = nonWS.test(self.getLine(end));
         self.replaceRange(pad + endString, Pos(end));
@@ -106,10 +109,11 @@
     });
   });
 
-  CodeMirror.defineExtension("uncomment", function(from, to, options) {
+  CodeMirror.defineExtension("uncomment", function (from, to, options) {
     if (!options) options = noOptions;
     var self = this, mode = self.getModeAt(from);
-    var end = Math.min(to.ch != 0 || to.line == from.line ? to.line : to.line - 1, self.lastLine()), start = Math.min(from.line, end);
+    var end = Math.min(to.ch != 0 || to.line == from.line ? to.line : to.line - 1, self.lastLine()),
+        start = Math.min(from.line, end);
 
     // Try finding line comments
     var lineString = options.lineComment || mode.lineComment, lines = [];
@@ -124,7 +128,7 @@
         if (found > -1 && nonWS.test(line.slice(0, found))) break lineComment;
         lines.push(line);
       }
-      self.operation(function() {
+      self.operation(function () {
         for (var i = start; i <= end; ++i) {
           var line = lines[i - start];
           var pos = line.indexOf(lineString), endPos = pos + lineString.length;
@@ -164,9 +168,9 @@
     lastStart = (firstEnd == -1 || almostLastStart == -1) ? -1 : to.ch + almostLastStart;
     if (firstEnd != -1 && lastStart != -1 && lastStart != to.ch) return false;
 
-    self.operation(function() {
+    self.operation(function () {
       self.replaceRange("", Pos(end, close - (pad && endLine.slice(close - pad.length, close) == pad ? pad.length : 0)),
-                        Pos(end, close + endString.length));
+          Pos(end, close + endString.length));
       var openEnd = open + startString.length;
       if (pad && startLine.slice(openEnd, openEnd + pad.length) == pad) openEnd += pad.length;
       self.replaceRange("", Pos(start, open), Pos(start, openEnd));

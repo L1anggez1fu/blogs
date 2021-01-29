@@ -35,7 +35,7 @@
         select t.id tid, t.name, b.id bid, b.title,b.type_id from blog.t_type t,blog.t_blog b where t.id = b.type_id
     </select>
 
-    <delete id="deleteType" >
+    <delete id="deleteType">
         delete from blog.t_type where id = #{id}
     </delete>
 

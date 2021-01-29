@@ -71,7 +71,7 @@
         #{updateTime},#{typeId},#{tagIds},#{userId},#{description});
     </insert>
 
-    <select id="getBlogById" resultType="com.lgzf.dto.ShowBlog" >
+    <select id="getBlogById" resultType="com.lgzf.dto.ShowBlog">
         select b.id,b.published,b.flag,b.title,b.content,b.type_id,
          b.tag_ids,b.first_picture,b.description,b.recommend,b.share_statement,
          b.appreciation,b.commentabled from blog.t_blog b  where  b.id = #{id};
@@ -89,7 +89,7 @@
         delete from blog.t_blog where id = #{id}
     </delete>
 
-    <delete id="deleteBlogAndTag" >
+    <delete id="deleteBlogAndTag">
         delete from blog.t_blog_tags where blog_id = #{blogId}
     </delete>
 
@@ -98,17 +98,17 @@
     </insert>
 
     <select id="getSearchBlog" resultMap="homePageBlog">
-        <bind name="pattern" value="'%' + query + '%'" />
+        <bind name="pattern" value="'%' + query + '%'"/>
         select b.id,b.title,b.first_picture, b.views,b.update_time,b.description,
         t.name ,
         u.nickname, u.avatar
         from blog.t_blog b, blog.t_type t,blog.t_user u
-        where b.type_id = t.id and  u.id = b.user_id and b.title like #{pattern} or b.content like  #{pattern}
+        where b.type_id = t.id and u.id = b.user_id and b.title like #{pattern} or b.content like #{pattern}
         order by b.update_time desc
     </select>
 
     <select id="searchByTitleOrTypeOrRecommend" parameterType="com.lgzf.dto.SearchBlog" resultMap="blog">
-        <bind name="pattern" value="'%' + title + '%'" />
+        <bind name="pattern" value="'%' + title + '%'"/>
         select b.id,b.title,b.update_time,b.recommend,b.type_id,t.id,t.name from blog.t_blog b ,blog.t_type t
         <where>
             <if test="1 == 1">

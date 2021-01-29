@@ -71,6 +71,8 @@ public class CommentServiceImpl implements CommentService {
     }
 
     /**
+     * 查询是否有子评论
+     *
      * @param comments root根节点，blog不为空的对象集合
      * @return
      */
@@ -93,7 +95,7 @@ public class CommentServiceImpl implements CommentService {
     private List<Comment> tempReplys = new ArrayList<>();
 
     /**
-     * 递归迭代，剥洋葱
+     * 递归迭代，找到子集回复
      *
      * @param comment 被迭代的对象
      * @return
@@ -102,6 +104,7 @@ public class CommentServiceImpl implements CommentService {
         tempReplys.add(comment);//顶节点添加到临时存放集合
         if (comment.getReplyComments().size() > 0) {
             List<Comment> replys = comment.getReplyComments();
+            /*循环找出子评论的子评论*/
             for (Comment reply : replys) {
                 tempReplys.add(reply);
                 if (reply.getReplyComments().size() > 0) {

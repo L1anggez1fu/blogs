@@ -9,112 +9,115 @@
 </head>
 <body>
 <!-- 导航   -->
-    <nav th:replace="_fragments :: menu(5)" class="ui inverted segment attached segment m-padded-tb-mini m-shadow-small">
-        <div class="ui container">
-            <div class="ui inverted menu secondary stackable">
-                <h2 class="ui teal header item">Blog</h2>
-                <a href="#" class="m-item item m-mobile-hide"><i class="mini m-margin-left home icon"></i>首页</a>
-                <a href="#" class="m-item item m-mobile-hide"><i class="mini m-margin-left idea icon"></i>分类</a>
-                <a href="#" class="m-item item m-mobile-hide"><i class="mini m-margin-left tags icon"></i>标签</a>
-                <a href="#" class="m-item item m-mobile-hide"><i class="mini  m-margin-left clone icon"></i>归档</a>
-                <a href="#" class="m-item item m-mobile-hide"><i class="mini m-margin-left info icon"></i>关于我</a>
-                <div class="right m-item item m-mobile-hide">
-                    <div class="ui icon input">
-                        <input type="text" placeholder="Seacrch..">
-                        <i class="search link icon"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <a href="" class="ui menu toggle icon black button m-right-top m-mobile-show">
-            <i class="sidebar icon"></i>
-        </a>
-
-    </nav>
-
-<!--   中间内容 -->
-    <div class="m-container-small m-padded-tb-large">
-        <div class="ui container">
-            <div class="ui stackable grid">
-                <!--左边部分-->
-                <div class="eleven wide column">
-                    <img src="../static/images/121.png" th:src="@{/images/121.png}" alt="" class="ui rounded image">
-                </div>
-                <!--右边部分-->
-                <div class="five wide column">
-                    <div class="ui top attached segment">
-                        <div class="ui header">关于我</div>
-                    </div>
-                    <div class="ui attached segment">
-                        <p class="m-text-thin">奥数的厚爱水泥工阿斯猴年就死</p>
-                    </div>
-                    <div class="ui attached segment">
-                        <div class="ui orange basic label m-marin-tb-tiny">编程</div>
-                        <div class="ui orange basic label m-marin-tb-tiny">跑步</div>
-                        <div class="ui orange basic label m-marin-tb-tiny">篮球</div>
-                        <div class="ui orange basic label m-marin-tb-tiny">足球</div>
-                    </div>
-                    <div class="ui attached segment">
-                        <div class="ui teal basic label m-marin-tb-tiny">JS</div>
-                        <div class="ui teal basic label m-marin-tb-tiny">MAKRDOWN</div>
-                    </div>
-                    <div class="ui bottom attached segment">
-                        <a href="" data-position="bottom center" data-content="www.baidu.com" class="ui github circular icon button">
-                            <i class="icon github"></i>
-                        </a>
-                        <a href="" class="ui wechat circular icon button">
-                            <i class="icon weixin"></i>
-                        </a>
-                        <a href="" data-position="bottom center" data-content="739688335" class="ui qq circular icon button">
-                            <i class="icon qq"></i>
-                        </a>
-                    </div>
-                    <!--赞赏-->
-                    <div class="ui erweima flowing popup transition hidden">
-                        <img src="../static/images/121.png" style="width: 120px" alt="" class="ui rounded image">
-                    </div>
+<nav th:replace="_fragments :: menu(5)" class="ui inverted segment attached segment m-padded-tb-mini m-shadow-small">
+    <div class="ui container">
+        <div class="ui inverted menu secondary stackable">
+            <h2 class="ui teal header item">Blog</h2>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini m-margin-left home icon"></i>首页</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini m-margin-left idea icon"></i>分类</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini m-margin-left tags icon"></i>标签</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini  m-margin-left clone icon"></i>归档</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini m-margin-left info icon"></i>关于我</a>
+            <div class="right m-item item m-mobile-hide">
+                <div class="ui icon input">
+                    <input type="text" placeholder="Seacrch..">
+                    <i class="search link icon"></i>
                 </div>
             </div>
         </div>
     </div>
+    <a href="" class="ui menu toggle icon black button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
 
-    <br>
-    <br>
-<!--底部-->
-    <footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
-        <div class="ui center aligned container">
-            <div class="ui grid divided inverted stackable ">
-                <div class="three wide column">
-                    <div class="ui inverted link list">
-                        <div class="item">
-                            <img src="../static/images/121.png" class="ui round image" alt="" style="width: 120px">
-                        </div>
-                    </div>
+</nav>
+
+<!--   中间内容 -->
+<div class="m-container-small m-padded-tb-large">
+    <div class="ui container">
+        <div class="ui stackable grid">
+            <!--左边部分-->
+            <div class="eleven wide column">
+                <img src="../static/images/ava.jpg" th:src="@{/images/ava.jpg}" alt="" class="ui rounded image">
+            </div>
+            <!--右边部分-->
+            <div class="five wide column">
+                <div class="ui top attached segment">
+                    <div class="ui header">关于我</div>
                 </div>
-                <div class="three wide column">
-                    <h4 class="ui inverted header">最新博客</h4>
-                    <div class="ui inverted link list">
-                        <a href="#" class="item">用户故事 (123123)</a>
-                        <a href="#" class="item">用户故事 (123123)</a>
-                        <a href="#" class="item">用户故事 (123123)</a>
-                    </div>
+                <div class="ui attached segment">
+                    <p class="m-text-thin">暂无内容</p>
                 </div>
-                <div class="three wide column">
-                    <h4 class="ui inverted header">联系我</h4>
-                    <div class="ui inverted link list">
-                        <a href="#" class="item">QQ:</a>
-                        <a href="#" class="item">Email:</a>
-                    </div>
+                <div class="ui attached segment">
+                    <div class="ui orange basic label m-marin-tb-tiny">编程</div>
+                    <div class="ui orange basic label m-marin-tb-tiny">跑步</div>
+                    <div class="ui orange basic label m-marin-tb-tiny">唱歌</div>
+                    <div class="ui orange basic label m-marin-tb-tiny">电子竞技</div>
                 </div>
-                <div class="seven wide column">
-                    <h4 class="ui inverted header">介绍</h4>
-                    <p class="m-opacity-tiny">故事故事故事故事故事</p>
+                <div class="ui attached segment">
+                    <div class="ui teal basic label m-marin-tb-tiny">Java</div>
+                    <div class="ui teal basic label m-marin-tb-tiny">Markdown</div>
+                </div>
+                <div class="ui bottom attached segment">
+                    <a href="" data-position="bottom center" data-content="https://github.com/doublecharacters/blogs"
+                       class="ui github circular icon button">
+                        <i class="icon github"></i>
+                    </a>
+                    <a href="" data-position="bottom center" data-content="739688335"
+                       class="ui wechat circular icon button">
+                        <i class="icon weixin"></i>
+                    </a>
+                    <a href="" data-position="bottom center" data-content="739688335"
+                       class="ui qq circular icon button">
+                        <i class="icon qq"></i>
+                    </a>
+                </div>
+                <!--赞赏-->
+                <div class="ui erweima flowing popup transition hidden">
+                    <img src="../static/images/ava.jpg" style="width: 120px" alt="" class="ui rounded image">
                 </div>
             </div>
-            <div class="ui inverted section divider"></div>
-            <p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright © 2016 - 2020 Designed by LGZF</p>
         </div>
-    </footer>
+    </div>
+</div>
+
+<br>
+<br>
+<!--底部-->
+<footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
+    <div class="ui center aligned container">
+        <div class="ui grid divided inverted stackable ">
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <img src="../static/images/121.png" class="ui round image" alt="" style="width: 120px">
+                    </div>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header">最新博客</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">用户故事 (123123)</a>
+                    <a href="#" class="item">用户故事 (123123)</a>
+                    <a href="#" class="item">用户故事 (123123)</a>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header">联系我</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">QQ:</a>
+                    <a href="#" class="item">Email:</a>
+                </div>
+            </div>
+            <div class="seven wide column">
+                <h4 class="ui inverted header">介绍</h4>
+                <p class="m-opacity-tiny">故事故事故事故事故事</p>
+            </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright © 2016 - 2020 Designed by LGZF</p>
+    </div>
+</footer>
 
 <th:block th:replace="_fragments :: script">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
@@ -131,7 +134,7 @@
     $('.github').popup();
 
     $('.wechat').popup({
-        popup    : $('.erweima')
+        popup: $('.erweima')
     });
 </script>
 </body>

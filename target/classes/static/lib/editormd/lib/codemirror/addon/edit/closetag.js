@@ -25,30 +25,34 @@
  * See demos/closetag.html for a usage example.
  */
 
-(function(mod) {
+(function (mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
     mod(require("../../lib/codemirror"), require("../fold/xml-fold"));
   else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror", "../fold/xml-fold"], mod);
   else // Plain browser env
     mod(CodeMirror);
-})(function(CodeMirror) {
-  CodeMirror.defineOption("autoCloseTags", false, function(cm, val, old) {
+})(function (CodeMirror) {
+  CodeMirror.defineOption("autoCloseTags", false, function (cm, val, old) {
     if (old != CodeMirror.Init && old)
       cm.removeKeyMap("autoCloseTags");
     if (!val) return;
     var map = {name: "autoCloseTags"};
     if (typeof val != "object" || val.whenClosing)
-      map["'/'"] = function(cm) { return autoCloseSlash(cm); };
+      map["'/'"] = function (cm) {
+        return autoCloseSlash(cm);
+      };
     if (typeof val != "object" || val.whenOpening)
-      map["'>'"] = function(cm) { return autoCloseGT(cm); };
+      map["'>'"] = function (cm) {
+        return autoCloseGT(cm);
+      };
     cm.addKeyMap(map);
   });
 
   var htmlDontClose = ["area", "base", "br", "col", "command", "embed", "hr", "img", "input", "keygen", "link", "meta", "param",
-                       "source", "track", "wbr"];
+    "source", "track", "wbr"];
   var htmlIndent = ["applet", "blockquote", "body", "button", "div", "dl", "fieldset", "form", "frameset", "h1", "h2", "h3", "h4",
-                    "h5", "h6", "head", "html", "iframe", "layer", "legend", "object", "ol", "p", "select", "table", "ul"];
+    "h5", "h6", "head", "html", "iframe", "layer", "legend", "object", "ol", "p", "select", "table", "ul"];
 
   function autoCloseGT(cm) {
     if (cm.getOption("disableInput")) return CodeMirror.Pass;
@@ -76,9 +80,11 @@
         return CodeMirror.Pass;
 
       var indent = indentTags && indexOf(indentTags, lowerTagName) > -1;
-      replacements[i] = {indent: indent,
-                         text: ">" + (indent ? "\n\n" : "") + "</" + tagName + ">",
-                         newPos: indent ? CodeMirror.Pos(pos.line + 1, 0) : CodeMirror.Pos(pos.line, pos.ch + 1)};
+      replacements[i] = {
+        indent: indent,
+        text: ">" + (indent ? "\n\n" : "") + "</" + tagName + ">",
+        newPos: indent ? CodeMirror.Pos(pos.line + 1, 0) : CodeMirror.Pos(pos.line, pos.ch + 1)
+      };
     }
 
     for (var i = ranges.length - 1; i >= 0; i--) {
@@ -102,7 +108,7 @@
       var pos = ranges[i].head, tok = cm.getTokenAt(pos);
       var inner = CodeMirror.innerMode(cm.getMode(), tok.state), state = inner.state;
       if (typingSlash && (tok.type == "string" || tok.string.charAt(0) != "<" ||
-                          tok.start != pos.ch - 1))
+          tok.start != pos.ch - 1))
         return CodeMirror.Pass;
       // Kludge to get around the fact that we are not in XML mode
       // when completing in JS/CSS snippet in htmlmixed mode. Does not
@@ -134,7 +140,9 @@
     return autoCloseCurrent(cm, true);
   }
 
-  CodeMirror.commands.closeTag = function(cm) { return autoCloseCurrent(cm); };
+  CodeMirror.commands.closeTag = function (cm) {
+    return autoCloseCurrent(cm);
+  };
 
   function indexOf(collection, elt) {
     if (collection.indexOf) return collection.indexOf(elt);

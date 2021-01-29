@@ -1,14 +1,14 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
 
-(function(mod) {
+(function (mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
     mod(require("../../lib/codemirror"));
   else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror"], mod);
   else // Plain browser env
     mod(CodeMirror);
-})(function(CodeMirror) {
+})(function (CodeMirror) {
   var modes = ["clike", "css", "javascript"];
 
   for (var i = 0; i < modes.length; ++i)
@@ -37,8 +37,8 @@
             for (var j = 0; j < token.start; ++j) insert += " ";
           }
         } else if ((found = full.indexOf(mode.blockCommentContinue)) != -1 &&
-                   found + mode.blockCommentContinue.length > token.start &&
-                   /^\s*$/.test(full.slice(0, found))) {
+            found + mode.blockCommentContinue.length > token.start &&
+            /^\s*$/.test(full.slice(0, found))) {
           insert = full.slice(0, found);
         }
         if (insert != null) insert += mode.blockCommentContinue;
@@ -55,7 +55,7 @@
       inserts[i] = "\n" + insert;
     }
 
-    cm.operation(function() {
+    cm.operation(function () {
       for (var i = ranges.length - 1; i >= 0; i--)
         cm.replaceRange(inserts[i], ranges[i].from(), ranges[i].to(), "+insert");
     });
@@ -68,7 +68,7 @@
     return true;
   }
 
-  CodeMirror.defineOption("continueComments", null, function(cm, val, prev) {
+  CodeMirror.defineOption("continueComments", null, function (cm, val, prev) {
     if (prev && prev != CodeMirror.Init)
       cm.removeKeyMap("continueComment");
     if (val) {

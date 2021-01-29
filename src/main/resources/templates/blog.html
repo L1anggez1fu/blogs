@@ -17,7 +17,7 @@
 <nav class="ui inverted segment attached segment m-padded-tb-mini m-shadow-small">
     <div class="ui container">
         <div class="ui inverted menu secondary stackable">
-            <h2 class="ui teal header item">Blog</h2>
+            <h2 class="ui teal header item">两个字符's blog</h2>
             <a href="#" class="m-item item m-mobile-hide"><i class="mini m-margin-left home icon"></i>首页</a>
             <a href="#" class="m-item item m-mobile-hide"><i class="mini m-margin-left idea icon"></i>分类</a>
             <a href="#" class="m-item item m-mobile-hide"><i class="mini m-margin-left tags icon"></i>标签</a>
@@ -25,7 +25,7 @@
             <a href="#" class="m-item item m-mobile-hide"><i class="mini m-margin-left info icon"></i>关于我</a>
             <div class="right m-item item m-mobile-hide">
                 <div class="ui icon input">
-                    <input type="text" placeholder="Seacrch..">
+                    <input type="text" placeholder="Search..">
                     <i class="search link icon"></i>
                 </div>
             </div>
@@ -43,9 +43,9 @@
         <div class="ui segment top attached">
             <div class="ui mini horizontal link list">
                 <div class="item">
-                    <img src="../static/images/121.png" th:src="${blog.avatar}" alt="" class="ui avatar image">
+                    <img src="../static/images/ava.jpg" th:src="${blog.avatar}" alt="" class="ui avatar image">
                     <div class="content">
-                        <a href="#" class="header" th:text="${blog.nickname}">字符</a>
+                        <a href="#" class="header" th:text="${blog.nickname}">两个字符</a>
                     </div>
                 </div>
                 <div class="item">
@@ -58,7 +58,7 @@
         </div>
         <!--图片-->
         <div class="ui attached segment">
-            <img src="../static/images/121.png" th:src="@{${blog.firstPicture}}" alt="" class="ui rounded fluid image">
+            <img src="../static/images/ava.jpg" th:src="@{${blog.firstPicture}}" alt="" class="ui rounded fluid image">
         </div>
         <!--内容-->
         <div class="ui attached segment">
@@ -86,12 +86,12 @@
                     <div class="ui orange basic label">
                         <div class="ui images" style="font-size: inherit !important;">
                             <div class="image">
-                                <img src="../static/images/121.png" th:src="@{/images/121.png}" alt=""
+                                <img src="../static/images/zfb.jpg" th:src="@{/images/zfb.jpg}" alt=""
                                      style="width: 120px" class="ui rounded bordered image">
                                 <div>支付宝</div>
                             </div>
                             <div class="image">
-                                <img src="../static/images/121.png" th:src="@{/images/121.png}" alt=""
+                                <img src="../static/images/wechat.png" th:src="@{/images/wechat.png}" alt=""
                                      style="width: 120px" class="ui rounded bordered image">
                                 <div>wechat</div>
                             </div>
@@ -106,8 +106,8 @@
             <div class="ui middle aligned grid">
                 <div class="eleven wide column">
                     <ui class="list">
-                        <li>作者：<span th:text="${blog.nickname}">李仁密</span><a href="#" th:href="@{/about}"
-                                                                             target="_blank">（联系作者）</a></li>
+                        <li>作者：<span th:text="${blog.nickname}">两个字符</span><a href="#" th:href="@{/about}"
+                                                                              target="_blank">（联系作者）</a></li>
                         <li>发表时间：<span
                                 th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd HH:mm')}">2017-10-02 09:08</span>
                         </li>
@@ -116,7 +116,7 @@
                     </ui>
                 </div>
                 <div class="five wide column">
-                    <img src="../static/images/121.png" th:src="@{/images/121.png}" style="width: 100px" alt=""
+                    <img src="../static/images/ava.jpg" th:src="@{/images/ava.jpg}" style="width: 100px" alt=""
                          class="right floated ui rounded bordered image">
                 </div>
             </div>
@@ -131,7 +131,7 @@
                         <h3 class="ui dividing header">评论</h3>
                         <div class="comment" th:each="comment : ${comments}">
                             <a class="avatar">
-                                <img src="../static/images/121.png" th:src="@{${comment.avatar}}">
+                                <img src="../static/images/ava.jpg" th:src="@{${comment.avatar}}">
                             </a>
                             <div class="content">
                                 <a class="author">
@@ -250,7 +250,7 @@
 <br>
 <br>
 <!--底部-->
-<footer class="ui inverted vertical segment m-padded-tb-massive">
+<footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
     <div class="ui center aligned container">
         <div class="ui grid divided inverted stackable ">
             <div class="three wide column">

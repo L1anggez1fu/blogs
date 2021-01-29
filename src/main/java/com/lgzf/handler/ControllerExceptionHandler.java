@@ -22,7 +22,7 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ModelAndView exceptinoHandler(HttpServletRequest request, Exception e) throws Exception {
-        logger.error("Requist URL : {},Exceptino : {}", request.getRequestURL(), e);
+        logger.error("Requist URL : {},Exception : {}", request.getRequestURL(), e);
 
         if (AnnotationUtils.findAnnotation(e.getClass(), ResponseStatus.class) != null) {
             throw e;

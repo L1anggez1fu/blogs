@@ -1,22 +1,22 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
 
-(function(mod) {
+(function (mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
     mod(require("../../lib/codemirror"));
   else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror"], mod);
   else // Plain browser env
     mod(CodeMirror);
-})(function(CodeMirror) {
+})(function (CodeMirror) {
   "use strict";
 
-  var HINT_ELEMENT_CLASS        = "CodeMirror-hint";
+  var HINT_ELEMENT_CLASS = "CodeMirror-hint";
   var ACTIVE_HINT_ELEMENT_CLASS = "CodeMirror-hint-active";
 
   // This is the old interface, kept around for now to stay
   // backwards-compatible.
-  CodeMirror.showHint = function(cm, getHints, options) {
+  CodeMirror.showHint = function (cm, getHints, options) {
     if (!getHints) return cm.showHint(options);
     if (options && options.async) getHints.async = true;
     var newOpts = {hint: getHints};
@@ -25,10 +25,11 @@
   };
 
   var asyncRunID = 0;
+
   function retrieveHints(getter, cm, options, then) {
     if (getter.async) {
       var id = ++asyncRunID;
-      getter(cm, function(hints) {
+      getter(cm, function (hints) {
         if (asyncRunID == id) then(hints);
       }, options);
     } else {
@@ -36,7 +37,7 @@
     }
   }
 
-  CodeMirror.defineExtension("showHint", function(options) {
+  CodeMirror.defineExtension("showHint", function (options) {
     // We want a single cursor position.
     if (this.listSelections().length > 1 || this.somethingSelected()) return;
 
@@ -46,7 +47,9 @@
     if (!getHints) return;
 
     CodeMirror.signal(this, "startCompletion", this);
-    return retrieveHints(getHints, this, completion.options, function(hints) { completion.showHints(hints); });
+    return retrieveHints(getHints, this, completion.options, function (hints) {
+      completion.showHints(hints);
+    });
   });
 
   function Completion(cm, options) {
@@ -56,7 +59,7 @@
   }
 
   Completion.prototype = {
-    close: function() {
+    close: function () {
       if (!this.active()) return;
       this.cm.state.completionActive = null;
 
@@ -65,20 +68,20 @@
       CodeMirror.signal(this.cm, "endCompletion", this.cm);
     },
 
-    active: function() {
+    active: function () {
       return this.cm.state.completionActive == this;
     },
 
-    pick: function(data, i) {
+    pick: function (data, i) {
       var completion = data.list[i];
       if (completion.hint) completion.hint(this.cm, data, completion);
       else this.cm.replaceRange(getText(completion), completion.from || data.from,
-                                completion.to || data.to, "complete");
+          completion.to || data.to, "complete");
       CodeMirror.signal(data, "pick", completion);
       this.close();
     },
 
-    showHints: function(data) {
+    showHints: function (data) {
       if (!data || !data.list.length || !this.active()) return this.close();
 
       if (this.options.completeSingle && data.list.length == 1)
@@ -87,7 +90,7 @@
         this.showWidget(data);
     },
 
-    showWidget: function(data) {
+    showWidget: function (data) {
       this.widget = new Widget(this, data);
       CodeMirror.signal(data, "shown");
 
@@ -95,8 +98,8 @@
       var closeOn = this.options.closeCharacters;
       var startPos = this.cm.getCursor(), startLen = this.cm.getLine(startPos.line).length;
 
-      var requestAnimationFrame = window.requestAnimationFrame || function(fn) {
-        return setTimeout(fn, 1000/60);
+      var requestAnimationFrame = window.requestAnimationFrame || function (fn) {
+        return setTimeout(fn, 1000 / 60);
       };
       var cancelAnimationFrame = window.cancelAnimationFrame || clearTimeout;
 
@@ -113,6 +116,7 @@
         CodeMirror.signal(data, "update");
         retrieveHints(completion.options.hint, completion.cm, completion.options, finishUpdate);
       }
+
       function finishUpdate(data_) {
         data = data_;
         if (finished) return;
@@ -140,11 +144,12 @@
           if (completion.widget) completion.widget.close();
         }
       }
+
       this.cm.on("cursorActivity", activity);
       this.onClose = done;
     },
 
-    buildOptions: function(options) {
+    buildOptions: function (options) {
       var editor = this.cm.options.hintOptions;
       var out = {};
       for (var prop in defaultOptions) out[prop] = defaultOptions[prop];
@@ -163,22 +168,37 @@
 
   function buildKeyMap(completion, handle) {
     var baseMap = {
-      Up: function() {handle.moveFocus(-1);},
-      Down: function() {handle.moveFocus(1);},
-      PageUp: function() {handle.moveFocus(-handle.menuSize() + 1, true);},
-      PageDown: function() {handle.moveFocus(handle.menuSize() - 1, true);},
-      Home: function() {handle.setFocus(0);},
-      End: function() {handle.setFocus(handle.length - 1);},
+      Up: function () {
+        handle.moveFocus(-1);
+      },
+      Down: function () {
+        handle.moveFocus(1);
+      },
+      PageUp: function () {
+        handle.moveFocus(-handle.menuSize() + 1, true);
+      },
+      PageDown: function () {
+        handle.moveFocus(handle.menuSize() - 1, true);
+      },
+      Home: function () {
+        handle.setFocus(0);
+      },
+      End: function () {
+        handle.setFocus(handle.length - 1);
+      },
       Enter: handle.pick,
       Tab: handle.pick,
       Esc: handle.close
     };
     var custom = completion.options.customKeys;
     var ourMap = custom ? {} : baseMap;
+
     function addBinding(key, val) {
       var bound;
       if (typeof val != "string")
-        bound = function(cm) { return val(cm, handle); };
+        bound = function (cm) {
+          return val(cm, handle);
+        };
       // This mechanism is deprecated
       else if (baseMap.hasOwnProperty(val))
         bound = baseMap[val];
@@ -186,6 +206,7 @@
         bound = val;
       ourMap[key] = bound;
     }
+
     if (custom)
       for (var key in custom) if (custom.hasOwnProperty(key))
         addBinding(key, custom[key]);
@@ -258,23 +279,39 @@
     }
 
     cm.addKeyMap(this.keyMap = buildKeyMap(completion, {
-      moveFocus: function(n, avoidWrap) { widget.changeActive(widget.selectedHint + n, avoidWrap); },
-      setFocus: function(n) { widget.changeActive(n); },
-      menuSize: function() { return widget.screenAmount(); },
+      moveFocus: function (n, avoidWrap) {
+        widget.changeActive(widget.selectedHint + n, avoidWrap);
+      },
+      setFocus: function (n) {
+        widget.changeActive(n);
+      },
+      menuSize: function () {
+        return widget.screenAmount();
+      },
       length: completions.length,
-      close: function() { completion.close(); },
-      pick: function() { widget.pick(); },
+      close: function () {
+        completion.close();
+      },
+      pick: function () {
+        widget.pick();
+      },
       data: data
     }));
 
     if (completion.options.closeOnUnfocus) {
       var closingOnBlur;
-      cm.on("blur", this.onBlur = function() { closingOnBlur = setTimeout(function() { completion.close(); }, 100); });
-      cm.on("focus", this.onFocus = function() { clearTimeout(closingOnBlur); });
+      cm.on("blur", this.onBlur = function () {
+        closingOnBlur = setTimeout(function () {
+          completion.close();
+        }, 100);
+      });
+      cm.on("focus", this.onFocus = function () {
+        clearTimeout(closingOnBlur);
+      });
     }
 
     var startScroll = cm.getScrollInfo();
-    cm.on("scroll", this.onScroll = function() {
+    cm.on("scroll", this.onScroll = function () {
       var curScroll = cm.getScrollInfo(), editor = cm.getWrapperElement().getBoundingClientRect();
       var newTop = top + startScroll.top - curScroll.top;
       var point = newTop - (window.pageYOffset || (document.documentElement || document.body).scrollTop);
@@ -284,12 +321,15 @@
       hints.style.left = (left + startScroll.left - curScroll.left) + "px";
     });
 
-    CodeMirror.on(hints, "dblclick", function(e) {
+    CodeMirror.on(hints, "dblclick", function (e) {
       var t = getHintElement(hints, e.target || e.srcElement);
-      if (t && t.hintId != null) {widget.changeActive(t.hintId); widget.pick();}
+      if (t && t.hintId != null) {
+        widget.changeActive(t.hintId);
+        widget.pick();
+      }
     });
 
-    CodeMirror.on(hints, "click", function(e) {
+    CodeMirror.on(hints, "click", function (e) {
       var t = getHintElement(hints, e.target || e.srcElement);
       if (t && t.hintId != null) {
         widget.changeActive(t.hintId);
@@ -297,8 +337,10 @@
       }
     });
 
-    CodeMirror.on(hints, "mousedown", function() {
-      setTimeout(function(){cm.focus();}, 20);
+    CodeMirror.on(hints, "mousedown", function () {
+      setTimeout(function () {
+        cm.focus();
+      }, 20);
     });
 
     CodeMirror.signal(data, "select", completions[0], hints.firstChild);
@@ -306,7 +348,7 @@
   }
 
   Widget.prototype = {
-    close: function() {
+    close: function () {
       if (this.completion.widget != this) return;
       this.completion.widget = null;
       this.hints.parentNode.removeChild(this.hints);
@@ -320,15 +362,15 @@
       cm.off("scroll", this.onScroll);
     },
 
-    pick: function() {
+    pick: function () {
       this.completion.pick(this.data, this.selectedHint);
     },
 
-    changeActive: function(i, avoidWrap) {
+    changeActive: function (i, avoidWrap) {
       if (i >= this.data.list.length)
         i = avoidWrap ? this.data.list.length - 1 : 0;
       else if (i < 0)
-        i = avoidWrap ? 0  : this.data.list.length - 1;
+        i = avoidWrap ? 0 : this.data.list.length - 1;
       if (this.selectedHint == i) return;
       var node = this.hints.childNodes[this.selectedHint];
       node.className = node.className.replace(" " + ACTIVE_HINT_ELEMENT_CLASS, "");
@@ -341,12 +383,12 @@
       CodeMirror.signal(this.data, "select", this.data.list[this.selectedHint], node);
     },
 
-    screenAmount: function() {
+    screenAmount: function () {
       return Math.floor(this.hints.clientHeight / this.hints.firstChild.offsetHeight) || 1;
     }
   };
 
-  CodeMirror.registerHelper("hint", "auto", function(cm, options) {
+  CodeMirror.registerHelper("hint", "auto", function (cm, options) {
     var helpers = cm.getHelpers(cm.getCursor(), "hint"), words;
     if (helpers.length) {
       for (var i = 0; i < helpers.length; i++) {
@@ -360,7 +402,7 @@
     }
   });
 
-  CodeMirror.registerHelper("hint", "fromList", function(cm, options) {
+  CodeMirror.registerHelper("hint", "fromList", function (cm, options) {
     var cur = cm.getCursor(), token = cm.getTokenAt(cur);
     var found = [];
     for (var i = 0; i < options.words.length; i++) {
@@ -372,7 +414,7 @@
     if (found.length) return {
       list: found,
       from: CodeMirror.Pos(cur.line, token.start),
-            to: CodeMirror.Pos(cur.line, token.end)
+      to: CodeMirror.Pos(cur.line, token.end)
     };
   });
 

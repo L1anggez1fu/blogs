@@ -7,7 +7,10 @@
 <link rel="stylesheet" href="../../lib/codemirror.css">
 <script src="../../lib/codemirror.js"></script>
 <script src="fortran.js"></script>
-<style type="text/css">.CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black;}</style>
+<style type="text/css">.CodeMirror {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}</style>
 <div id=nav>
   <a href="http://codemirror.net"><h1>CodeMirror</h1><img id=logo src="../../doc/logo.png"></a>
 
@@ -23,10 +26,10 @@
 </div>
 
 <article>
-<h2>Fortran mode</h2>
+  <h2>Fortran mode</h2>
 
 
-<div><textarea id="code" name="code">
+  <div><textarea id="code" name="code">
 ! Example Fortran code
   program average
 
@@ -70,12 +73,12 @@
   end program average
 </textarea></div>
 
-    <script>
-      var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-        lineNumbers: true,
-        mode: "text/x-fortran"
-      });
-    </script>
+  <script>
+    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+      lineNumbers: true,
+      mode: "text/x-fortran"
+    });
+  </script>
 
-    <p><strong>MIME types defined:</strong> <code>text/x-Fortran</code>.</p>
-  </article>
+  <p><strong>MIME types defined:</strong> <code>text/x-Fortran</code>.</p>
+</article>

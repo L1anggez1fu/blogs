@@ -1,9 +1,12 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
 
-(function() {
+(function () {
   var mode = CodeMirror.getMode({tabSize: 4}, 'textile');
-  function MT(name) { test.mode(name, mode, Array.prototype.slice.call(arguments, 1)); }
+
+  function MT(name) {
+    test.mode(name, mode, Array.prototype.slice.call(arguments, 1));
+  }
 
   MT('simpleParagraphs',
       'Some text.',
@@ -53,16 +56,16 @@
       'foo bar[[1a2]]');
 
   MT('special-characters',
-          'Registered [tag (r)], ' +
-          'Trademark [tag (tm)], and ' +
-          'Copyright [tag (c)] 2008');
+      'Registered [tag (r)], ' +
+      'Trademark [tag (tm)], and ' +
+      'Copyright [tag (c)] 2008');
 
   MT('cite',
       "A book is [keyword ??The Count of Monte Cristo??] by Dumas.");
 
   MT('additionAndDeletion',
       'The news networks declared [negative -Al Gore-] ' +
-        '[positive +George W. Bush+] the winner in Florida.');
+      '[positive +George W. Bush+] the winner in Florida.');
 
   MT('subAndSup',
       'f(x, n) = log [builtin ~4~] x [builtin ^n^]');
@@ -170,13 +173,13 @@
   MT('ulFormatting',
       '[variable-2 * ][variable-2&em _foo_][variable-2  bar]',
       '[variable-2 * ][variable-2&strong *][variable-2&em&strong _foo_]' +
-        '[variable-2&strong *][variable-2  bar]',
+      '[variable-2&strong *][variable-2  bar]',
       '[variable-2 * ][variable-2&strong *foo*][variable-2  bar]');
 
   MT('olFormatting',
       '[variable-2 # ][variable-2&em _foo_][variable-2  bar]',
       '[variable-2 # ][variable-2&strong *][variable-2&em&strong _foo_]' +
-        '[variable-2&strong *][variable-2  bar]',
+      '[variable-2&strong *][variable-2  bar]',
       '[variable-2 # ][variable-2&strong *foo*][variable-2  bar]');
 
   MT('ulNested',
@@ -278,7 +281,7 @@
 
   MT('divFormatting',
       '[punctuation div. ][punctuation&strong *foo ]' +
-        '[punctuation&strong&em _bar_][punctuation&strong *]');
+      '[punctuation&strong&em _bar_][punctuation&strong *]');
 
   MT('phraseModifierAttributes',
       'p[attribute (my-class)]. This is a paragraph that has a class and' +
@@ -391,7 +394,7 @@
    */
 
   MT('notextile',
-    '[string-2 notextile. *No* formatting]');
+      '[string-2 notextile. *No* formatting]');
 
   MT('notextileInline',
       'Use [string-2 ==*asterisks*==] for [strong *strong*] text.');
@@ -407,11 +410,11 @@
   /* Only toggling phrases between non-word chars. */
 
   MT('phrase-in-word',
-     'foo_bar_baz');
+      'foo_bar_baz');
 
   MT('phrase-non-word',
-     '[negative -x-] aaa-bbb ccc-ddd [negative -eee-] fff [negative -ggg-]');
+      '[negative -x-] aaa-bbb ccc-ddd [negative -eee-] fff [negative -ggg-]');
 
   MT('phrase-lone-dash',
-     'foo - bar - baz');
+      'foo - bar - baz');
 })();

@@ -1,14 +1,14 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
 
-(function(mod) {
+(function (mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
     mod(require("../../lib/codemirror"), require("./xml-hint"));
   else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror", "./xml-hint"], mod);
   else // Plain browser env
     mod(CodeMirror);
-})(function(CodeMirror) {
+})(function (CodeMirror) {
   "use strict";
 
   var langs = "ab aa af ak sq am ar an hy as av ae ay az bm ba eu be bn bh bi bs br bg my ca ch ce ny zh cv kw co cr hr cs da dv nl dz en eo et ee fo fj fi fr ff gl ka de el gn gu ht ha he hz hi ho hu ia id ie ga ig ik io is it iu ja jv kl kn kr ks kk km ki rw ky kv kg ko ku kj la lb lg li ln lo lt lu lv gv mk mg ms ml mt mi mr mh mn na nv nb nd ne ng nn no ii nr oc oj cu om or os pa pi fa pl ps pt qu rm rn ro ru sa sc sd se sm sg sr gd sn si sk sl so st es su sw ss sv ta te tg th ti bo tk tl tn to tr ts tt tw ty ug uk ur uz ve vi vo wa cy wo fy xh yi yo za zu".split(" ");
@@ -17,9 +17,9 @@
   var methods = ["get", "post", "put", "delete"];
   var encs = ["application/x-www-form-urlencoded", "multipart/form-data", "text/plain"];
   var media = ["all", "screen", "print", "embossed", "braille", "handheld", "print", "projection", "screen", "tty", "tv", "speech",
-               "3d-glasses", "resolution [>][<][=] [X]", "device-aspect-ratio: X/Y", "orientation:portrait",
-               "orientation:landscape", "device-height: [X]", "device-width: [X]"];
-  var s = { attrs: {} }; // Simple tag, reused for a whole lot of tags
+    "3d-glasses", "resolution [>][<][=] [X]", "device-aspect-ratio: X/Y", "orientation:portrait",
+    "orientation:landscape", "device-height: [X]", "device-width: [X]"];
+  var s = {attrs: {}}; // Simple tag, reused for a whole lot of tags
 
   var data = {
     a: {
@@ -54,12 +54,12 @@
       }
     },
     b: s,
-    base: { attrs: { href: null, target: targets } },
+    base: {attrs: {href: null, target: targets}},
     basefont: s,
     bdi: s,
     bdo: s,
     big: s,
-    blockquote: { attrs: { cite: null } },
+    blockquote: {attrs: {cite: null}},
     body: s,
     br: s,
     button: {
@@ -74,13 +74,13 @@
         type: ["submit", "reset", "button"]
       }
     },
-    canvas: { attrs: { width: null, height: null } },
+    canvas: {attrs: {width: null, height: null}},
     caption: s,
     center: s,
     cite: s,
     code: s,
-    col: { attrs: { span: null } },
-    colgroup: { attrs: { span: null } },
+    col: {attrs: {span: null}},
+    colgroup: {attrs: {span: null}},
     command: {
       attrs: {
         type: ["command", "checkbox", "radio"],
@@ -89,21 +89,21 @@
         checked: ["", "checked"]
       }
     },
-    data: { attrs: { value: null } },
-    datagrid: { attrs: { disabled: ["", "disabled"], multiple: ["", "multiple"] } },
-    datalist: { attrs: { data: null } },
+    data: {attrs: {value: null}},
+    datagrid: {attrs: {disabled: ["", "disabled"], multiple: ["", "multiple"]}},
+    datalist: {attrs: {data: null}},
     dd: s,
-    del: { attrs: { cite: null, datetime: null } },
-    details: { attrs: { open: ["", "open"] } },
+    del: {attrs: {cite: null, datetime: null}},
+    details: {attrs: {open: ["", "open"]}},
     dfn: s,
     dir: s,
     div: s,
     dl: s,
     dt: s,
     em: s,
-    embed: { attrs: { src: null, type: null, width: null, height: null } },
-    eventsource: { attrs: { src: null } },
-    fieldset: { attrs: { disabled: ["", "disabled"], form: null, name: null } },
+    embed: {attrs: {src: null, type: null, width: null, height: null}},
+    eventsource: {attrs: {src: null}},
+    fieldset: {attrs: {disabled: ["", "disabled"], form: null, name: null}},
     figcaption: s,
     figure: s,
     font: s,
@@ -130,7 +130,7 @@
     hgroup: s,
     hr: s,
     html: {
-      attrs: { manifest: null },
+      attrs: {manifest: null},
       children: ["head", "body"]
     },
     i: s,
@@ -166,11 +166,11 @@
         readonly: ["", "readonly"],
         required: ["", "required"],
         type: ["hidden", "text", "search", "tel", "url", "email", "password", "datetime", "date", "month",
-               "week", "time", "datetime-local", "number", "range", "color", "checkbox", "radio",
-               "file", "submit", "image", "reset", "button"]
+          "week", "time", "datetime-local", "number", "range", "color", "checkbox", "radio",
+          "file", "submit", "image", "reset", "button"]
       }
     },
-    ins: { attrs: { cite: null, datetime: null } },
+    ins: {attrs: {cite: null, datetime: null}},
     kbd: s,
     keygen: {
       attrs: {
@@ -180,9 +180,9 @@
         keytype: ["RSA"]
       }
     },
-    label: { attrs: { "for": null, form: null } },
+    label: {attrs: {"for": null, form: null}},
     legend: s,
-    li: { attrs: { value: null } },
+    li: {attrs: {value: null}},
     link: {
       attrs: {
         href: null, type: null,
@@ -191,9 +191,9 @@
         sizes: ["all", "16x16", "16x16 32x32", "16x16 32x32 64x64"]
       }
     },
-    map: { attrs: { name: null } },
+    map: {attrs: {name: null}},
     mark: s,
-    menu: { attrs: { label: null, type: ["list", "context", "toolbar"] } },
+    menu: {attrs: {label: null, type: ["list", "context", "toolbar"]}},
     meta: {
       attrs: {
         content: null,
@@ -202,7 +202,7 @@
         "http-equiv": ["content-language", "content-type", "default-style", "refresh"]
       }
     },
-    meter: { attrs: { value: null, min: null, low: null, high: null, max: null, optimum: null } },
+    meter: {attrs: {value: null, min: null, low: null, high: null, max: null, optimum: null}},
     nav: s,
     noframes: s,
     noscript: s,
@@ -212,15 +212,15 @@
         typemustmatch: ["", "typemustmatch"]
       }
     },
-    ol: { attrs: { reversed: ["", "reversed"], start: null, type: ["1", "a", "A", "i", "I"] } },
-    optgroup: { attrs: { disabled: ["", "disabled"], label: null } },
-    option: { attrs: { disabled: ["", "disabled"], label: null, selected: ["", "selected"], value: null } },
-    output: { attrs: { "for": null, form: null, name: null } },
+    ol: {attrs: {reversed: ["", "reversed"], start: null, type: ["1", "a", "A", "i", "I"]}},
+    optgroup: {attrs: {disabled: ["", "disabled"], label: null}},
+    option: {attrs: {disabled: ["", "disabled"], label: null, selected: ["", "selected"], value: null}},
+    output: {attrs: {"for": null, form: null, name: null}},
     p: s,
-    param: { attrs: { name: null, value: null } },
+    param: {attrs: {name: null, value: null}},
     pre: s,
-    progress: { attrs: { value: null, max: null } },
-    q: { attrs: { cite: null } },
+    progress: {attrs: {value: null, max: null}},
+    q: {attrs: {cite: null}},
     rp: s,
     rt: s,
     ruby: s,
@@ -245,7 +245,7 @@
       }
     },
     small: s,
-    source: { attrs: { src: null, type: null, media: null } },
+    source: {attrs: {src: null, type: null, media: null}},
     span: s,
     strike: s,
     strong: s,
@@ -261,7 +261,7 @@
     sup: s,
     table: s,
     tbody: s,
-    td: { attrs: { colspan: null, rowspan: null, headers: null } },
+    td: {attrs: {colspan: null, rowspan: null, headers: null}},
     textarea: {
       attrs: {
         dirname: null, form: null, maxlength: null, name: null, placeholder: null,
@@ -274,9 +274,9 @@
       }
     },
     tfoot: s,
-    th: { attrs: { colspan: null, rowspan: null, headers: null, scope: ["row", "col", "rowgroup", "colgroup"] } },
+    th: {attrs: {colspan: null, rowspan: null, headers: null, scope: ["row", "col", "rowgroup", "colgroup"]}},
     thead: s,
-    time: { attrs: { datetime: null } },
+    time: {attrs: {datetime: null}},
     title: s,
     tr: s,
     track: {
@@ -329,6 +329,7 @@
     onclick: null,
     rel: ["stylesheet", "alternate", "author", "bookmark", "help", "license", "next", "nofollow", "noreferrer", "prefetch", "prev", "search", "tag"]
   };
+
   function populate(obj) {
     for (var attr in globalAttrs) if (globalAttrs.hasOwnProperty(attr))
       obj.attrs[attr] = globalAttrs[attr];
@@ -339,10 +340,12 @@
     populate(data[tag]);
 
   CodeMirror.htmlSchema = data;
+
   function htmlHint(cm, options) {
     var local = {schemaInfo: data};
     if (options) for (var opt in options) local[opt] = options[opt];
     return CodeMirror.hint.xml(cm, local);
   }
+
   CodeMirror.registerHelper("hint", "html", htmlHint);
 });

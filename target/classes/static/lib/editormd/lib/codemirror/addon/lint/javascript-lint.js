@@ -1,25 +1,25 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
 
-(function(mod) {
+(function (mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
     mod(require("../../lib/codemirror"));
   else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror"], mod);
   else // Plain browser env
     mod(CodeMirror);
-})(function(CodeMirror) {
+})(function (CodeMirror) {
   "use strict";
   // declare global: JSHINT
 
-  var bogus = [ "Dangerous comment" ];
+  var bogus = ["Dangerous comment"];
 
-  var warnings = [ [ "Expected '{'",
-                     "Statement body should be inside '{ }' braces." ] ];
+  var warnings = [["Expected '{'",
+    "Statement body should be inside '{ }' braces."]];
 
-  var errors = [ "Missing semicolon", "Extra comma", "Missing property name",
-                 "Unmatched ", " and instead saw", " is not defined",
-                 "Unclosed string", "Stopping, unable to continue" ];
+  var errors = ["Missing semicolon", "Extra comma", "Missing property name",
+    "Unmatched ", " and instead saw", " is not defined",
+    "Unclosed string", "Stopping, unable to continue"];
 
   function validator(text, options) {
     if (!window.JSHINT) return [];
@@ -44,7 +44,7 @@
 
     description = error.description;
 
-    for ( var i = 0; i < fixes.length; i++) {
+    for (var i = 0; i < fixes.length; i++) {
       fix = fixes[i];
       find = (typeof fix === "string" ? fix : fix[0]);
       replace = (typeof fix === "string" ? null : fix[1]);
@@ -61,7 +61,7 @@
 
   function isBogus(error) {
     var description = error.description;
-    for ( var i = 0; i < bogus.length; i++) {
+    for (var i = 0; i < bogus.length; i++) {
       if (description.indexOf(bogus[i]) !== -1) {
         return true;
       }
@@ -70,7 +70,7 @@
   }
 
   function parseErrors(errors, output) {
-    for ( var i = 0; i < errors.length; i++) {
+    for (var i = 0; i < errors.length; i++) {
       var error = errors[i];
       if (error) {
         var linetabpositions, index;
@@ -92,8 +92,8 @@
             tabpositions = [];
             // ugggh phantomjs does not like this
             // forEachChar(evidence, function(item, index) {
-            Array.prototype.forEach.call(evidence, function(item,
-                                                            index) {
+            Array.prototype.forEach.call(evidence, function (item,
+                                                             index) {
               if (item === '\t') {
                 // First col is 1 (not 0) to match error
                 // positions
@@ -104,7 +104,7 @@
           }
           if (tabpositions.length > 0) {
             var pos = error.character;
-            tabpositions.forEach(function(tabposition) {
+            tabpositions.forEach(function (tabposition) {
               if (pos > tabposition) pos -= 1;
             });
             error.character = pos;
@@ -126,10 +126,12 @@
         error = cleanup(error);
 
         if (error)
-          output.push({message: error.description,
-                       severity: error.severity,
-                       from: CodeMirror.Pos(error.line - 1, start),
-                       to: CodeMirror.Pos(error.line - 1, end)});
+          output.push({
+            message: error.description,
+            severity: error.severity,
+            from: CodeMirror.Pos(error.line - 1, start),
+            to: CodeMirror.Pos(error.line - 1, end)
+          });
       }
     }
   }

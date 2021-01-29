@@ -18,14 +18,14 @@
 // delay is used to specify how much time to wait, in milliseconds, before
 // highlighting the matches.
 
-(function(mod) {
+(function (mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
     mod(require("../../lib/codemirror"));
   else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror"], mod);
   else // Plain browser env
     mod(CodeMirror);
-})(function(CodeMirror) {
+})(function (CodeMirror) {
   "use strict";
 
   var DEFAULT_MIN_CHARS = 2;
@@ -48,7 +48,7 @@
     this.overlay = this.timeout = null;
   }
 
-  CodeMirror.defineOption("highlightSelectionMatches", false, function(cm, val, old) {
+  CodeMirror.defineOption("highlightSelectionMatches", false, function (cm, val, old) {
     if (old && old != CodeMirror.Init) {
       var over = cm.state.matchHighlighter.overlay;
       if (over) cm.removeOverlay(over);
@@ -66,11 +66,13 @@
   function cursorActivity(cm) {
     var state = cm.state.matchHighlighter;
     clearTimeout(state.timeout);
-    state.timeout = setTimeout(function() {highlightMatches(cm);}, state.delay);
+    state.timeout = setTimeout(function () {
+      highlightMatches(cm);
+    }, state.delay);
   }
 
   function highlightMatches(cm) {
-    cm.operation(function() {
+    cm.operation(function () {
       var state = cm.state.matchHighlighter;
       if (state.overlay) {
         cm.removeOverlay(state.overlay);
@@ -97,32 +99,34 @@
   function isWord(cm, from, to) {
     var str = cm.getRange(from, to);
     if (str.match(/^\w+$/) !== null) {
-        if (from.ch > 0) {
-            var pos = {line: from.line, ch: from.ch - 1};
-            var chr = cm.getRange(pos, from);
-            if (chr.match(/\W/) === null) return false;
-        }
-        if (to.ch < cm.getLine(from.line).length) {
-            var pos = {line: to.line, ch: to.ch + 1};
-            var chr = cm.getRange(to, pos);
-            if (chr.match(/\W/) === null) return false;
-        }
-        return true;
+      if (from.ch > 0) {
+        var pos = {line: from.line, ch: from.ch - 1};
+        var chr = cm.getRange(pos, from);
+        if (chr.match(/\W/) === null) return false;
+      }
+      if (to.ch < cm.getLine(from.line).length) {
+        var pos = {line: to.line, ch: to.ch + 1};
+        var chr = cm.getRange(to, pos);
+        if (chr.match(/\W/) === null) return false;
+      }
+      return true;
     } else return false;
   }
 
   function boundariesAround(stream, re) {
     return (!stream.start || !re.test(stream.string.charAt(stream.start - 1))) &&
-      (stream.pos == stream.string.length || !re.test(stream.string.charAt(stream.pos)));
+        (stream.pos == stream.string.length || !re.test(stream.string.charAt(stream.pos)));
   }
 
   function makeOverlay(query, hasBoundary, style) {
-    return {token: function(stream) {
-      if (stream.match(query) &&
-          (!hasBoundary || boundariesAround(stream, hasBoundary)))
-        return style;
-      stream.next();
-      stream.skipTo(query.charAt(0)) || stream.skipToEnd();
-    }};
+    return {
+      token: function (stream) {
+        if (stream.match(query) &&
+            (!hasBoundary || boundariesAround(stream, hasBoundary)))
+          return style;
+        stream.next();
+        stream.skipTo(query.charAt(0)) || stream.skipToEnd();
+      }
+    };
   }
 });

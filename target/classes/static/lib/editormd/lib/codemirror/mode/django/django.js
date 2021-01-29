@@ -1,27 +1,27 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
 
-(function(mod) {
+(function (mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
     mod(require("../../lib/codemirror"), require("../htmlmixed/htmlmixed"),
         require("../../addon/mode/overlay"));
   else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror", "../htmlmixed/htmlmixed",
-            "../../addon/mode/overlay"], mod);
+      "../../addon/mode/overlay"], mod);
   else // Plain browser env
     mod(CodeMirror);
-})(function(CodeMirror) {
+})(function (CodeMirror) {
   "use strict";
 
-  CodeMirror.defineMode("django:inner", function() {
+  CodeMirror.defineMode("django:inner", function () {
     var keywords = ["block", "endblock", "for", "endfor", "in", "true", "false",
-                    "loop", "none", "self", "super", "if", "endif", "as", "not", "and",
-                    "else", "import", "with", "endwith", "without", "context", "ifequal", "endifequal",
-                    "ifnotequal", "endifnotequal", "extends", "include", "load", "length", "comment",
-                    "endcomment", "empty"];
+      "loop", "none", "self", "super", "if", "endif", "as", "not", "and",
+      "else", "import", "with", "endwith", "without", "context", "ifequal", "endifequal",
+      "ifnotequal", "endifnotequal", "extends", "include", "load", "length", "comment",
+      "endcomment", "empty"];
     keywords = new RegExp("^((" + keywords.join(")|(") + "))\\b");
 
-    function tokenBase (stream, state) {
+    function tokenBase(stream, state) {
       stream.eatWhile(/[^\{]/);
       var ch = stream.next();
       if (ch == "{") {
@@ -31,7 +31,8 @@
         }
       }
     }
-    function inTag (close) {
+
+    function inTag(close) {
       if (close == "{") {
         close = "}";
       }
@@ -47,6 +48,7 @@
         return close == "#" ? "comment" : "string";
       };
     }
+
     return {
       startState: function () {
         return {tokenize: tokenBase};
@@ -57,7 +59,7 @@
     };
   });
 
-  CodeMirror.defineMode("django", function(config) {
+  CodeMirror.defineMode("django", function (config) {
     var htmlBase = CodeMirror.getMode(config, "text/html");
     var djangoInner = CodeMirror.getMode(config, "django:inner");
     return CodeMirror.overlayMode(htmlBase, djangoInner);

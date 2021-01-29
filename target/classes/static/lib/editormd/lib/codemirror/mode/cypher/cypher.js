@@ -4,21 +4,21 @@
 // By the Neo4j Team and contributors.
 // https://github.com/neo4j-contrib/CodeMirror
 
-(function(mod) {
+(function (mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
     mod(require("../../lib/codemirror"));
   else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror"], mod);
   else // Plain browser env
     mod(CodeMirror);
-})(function(CodeMirror) {
+})(function (CodeMirror) {
   "use strict";
-  var wordRegexp = function(words) {
+  var wordRegexp = function (words) {
     return new RegExp("^(?:" + words.join("|") + ")$", "i");
   };
 
-  CodeMirror.defineMode("cypher", function(config) {
-    var tokenBase = function(stream/*, state*/) {
+  CodeMirror.defineMode("cypher", function (config) {
+    var tokenBase = function (stream/*, state*/) {
       var ch = stream.next(), curPunc = null;
       if (ch === "\"" || ch === "'") {
         stream.match(/.+?["']/);
@@ -46,7 +46,7 @@
         return "variable";
       }
     };
-    var pushContext = function(state, type, col) {
+    var pushContext = function (state, type, col) {
       return state.context = {
         prev: state.context,
         indent: state.indent,
@@ -54,7 +54,7 @@
         type: type
       };
     };
-    var popContext = function(state) {
+    var popContext = function (state) {
       state.indent = state.context.indent;
       return state.context = state.context.prev;
     };
@@ -66,7 +66,7 @@
     var operatorChars = /[*+\-<>=&|~%^]/;
 
     return {
-      startState: function(/*base*/) {
+      startState: function (/*base*/) {
         return {
           tokenize: tokenBase,
           context: null,
@@ -74,7 +74,7 @@
           col: 0
         };
       },
-      token: function(stream, state) {
+      token: function (stream, state) {
         if (stream.sol()) {
           if (state.context && (state.context.align == null)) {
             state.context.align = false;
@@ -113,7 +113,7 @@
         }
         return style;
       },
-      indent: function(state, textAfter) {
+      indent: function (state, textAfter) {
         var firstChar = textAfter && textAfter.charAt(0);
         var context = state.context;
         if (/[\]\}]/.test(firstChar)) {
@@ -131,7 +131,7 @@
   });
 
   CodeMirror.modeExtensions["cypher"] = {
-    autoFormatLineBreaks: function(text) {
+    autoFormatLineBreaks: function (text) {
       var i, lines, reProcessedPortion;
       var lines = text.split("\n");
       var reProcessedPortion = /\s+\b(return|where|order by|match|with|skip|limit|create|delete|set)\b\s/g;

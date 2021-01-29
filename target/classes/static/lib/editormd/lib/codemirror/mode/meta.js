@@ -1,25 +1,37 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
 
-(function(mod) {
+(function (mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
     mod(require("../lib/codemirror"));
   else if (typeof define == "function" && define.amd) // AMD
     define(["../lib/codemirror"], mod);
   else // Plain browser env
     mod(CodeMirror);
-})(function(CodeMirror) {
+})(function (CodeMirror) {
   "use strict";
 
   CodeMirror.modeInfo = [
     {name: "APL", mime: "text/apl", mode: "apl", ext: ["dyalog", "apl"]},
     {name: "Asterisk", mime: "text/x-asterisk", mode: "asterisk", file: /^extensions\.conf$/i},
     {name: "C", mime: "text/x-csrc", mode: "clike", ext: ["c", "h"]},
-    {name: "C++", mime: "text/x-c++src", mode: "clike", ext: ["cpp", "c++", "cc", "cxx", "hpp", "h++", "hh", "hxx"], alias: ["cpp"]},
+    {
+      name: "C++",
+      mime: "text/x-c++src",
+      mode: "clike",
+      ext: ["cpp", "c++", "cc", "cxx", "hpp", "h++", "hh", "hxx"],
+      alias: ["cpp"]
+    },
     {name: "Cobol", mime: "text/x-cobol", mode: "cobol", ext: ["cob", "cpy"]},
     {name: "C#", mime: "text/x-csharp", mode: "clike", ext: ["cs"], alias: ["csharp"]},
     {name: "Clojure", mime: "text/x-clojure", mode: "clojure", ext: ["clj"]},
-    {name: "CoffeeScript", mime: "text/x-coffeescript", mode: "coffeescript", ext: ["coffee"], alias: ["coffee", "coffee-script"]},
+    {
+      name: "CoffeeScript",
+      mime: "text/x-coffeescript",
+      mode: "coffeescript",
+      ext: ["coffee"],
+      alias: ["coffee", "coffee-script"]
+    },
     {name: "Common Lisp", mime: "text/x-common-lisp", mode: "commonlisp", ext: ["cl", "lisp", "el"], alias: ["lisp"]},
     {name: "Cypher", mime: "application/x-cypher-query", mode: "cypher", ext: ["cyp", "cypher"]},
     {name: "Cython", mime: "text/x-cython", mode: "python", ext: ["pyx", "pxd", "pxi"]},
@@ -57,9 +69,20 @@
     {name: "Jade", mime: "text/x-jade", mode: "jade", ext: ["jade"]},
     {name: "Java", mime: "text/x-java", mode: "clike", ext: ["java"]},
     {name: "Java Server Pages", mime: "application/x-jsp", mode: "htmlembedded", ext: ["jsp"], alias: ["jsp"]},
-    {name: "JavaScript", mimes: ["text/javascript", "text/ecmascript", "application/javascript", "application/x-javascript", "application/ecmascript"],
-     mode: "javascript", ext: ["js"], alias: ["ecmascript", "js", "node"]},
-    {name: "JSON", mimes: ["application/json", "application/x-json"], mode: "javascript", ext: ["json", "map"], alias: ["json5"]},
+    {
+      name: "JavaScript",
+      mimes: ["text/javascript", "text/ecmascript", "application/javascript", "application/x-javascript", "application/ecmascript"],
+      mode: "javascript",
+      ext: ["js"],
+      alias: ["ecmascript", "js", "node"]
+    },
+    {
+      name: "JSON",
+      mimes: ["application/json", "application/x-json"],
+      mode: "javascript",
+      ext: ["json", "map"],
+      alias: ["json5"]
+    },
     {name: "JSON-LD", mime: "application/ld+json", mode: "javascript", ext: ["jsonld"], alias: ["jsonld"]},
     {name: "Jinja2", mime: "null", mode: "jinja2"},
     {name: "Julia", mime: "text/x-julia", mode: "julia", ext: ["jl"]},
@@ -85,7 +108,13 @@
     {name: "Pig", mime: "text/x-pig", mode: "pig", ext: ["pig"]},
     {name: "Plain Text", mime: "text/plain", mode: "null", ext: ["txt", "text", "conf", "def", "list", "log"]},
     {name: "PLSQL", mime: "text/x-plsql", mode: "sql", ext: ["pls"]},
-    {name: "Properties files", mime: "text/x-properties", mode: "properties", ext: ["properties", "ini", "in"], alias: ["ini", "properties"]},
+    {
+      name: "Properties files",
+      mime: "text/x-properties",
+      mode: "properties",
+      ext: ["properties", "ini", "in"],
+      alias: ["ini", "properties"]
+    },
     {name: "Python", mime: "text/x-python", mode: "python", ext: ["py", "pyw"]},
     {name: "Puppet", mime: "text/x-puppet", mode: "puppet", ext: ["pp"]},
     {name: "Q", mime: "text/x-q", mode: "q", ext: ["q"]},
@@ -126,7 +155,13 @@
     {name: "VBScript", mime: "text/vbscript", mode: "vbscript", ext: ["vbs"]},
     {name: "Velocity", mime: "text/velocity", mode: "velocity", ext: ["vtl"]},
     {name: "Verilog", mime: "text/x-verilog", mode: "verilog", ext: ["v"]},
-    {name: "XML", mimes: ["application/xml", "text/xml"], mode: "xml", ext: ["xml", "xsl", "xsd"], alias: ["rss", "wsdl", "xsd"]},
+    {
+      name: "XML",
+      mimes: ["application/xml", "text/xml"],
+      mode: "xml",
+      ext: ["xml", "xsl", "xsd"],
+      alias: ["rss", "wsdl", "xsd"]
+    },
     {name: "XQuery", mime: "application/xquery", mode: "xquery", ext: ["xy", "xquery"]},
     {name: "YAML", mime: "text/x-yaml", mode: "yaml", ext: ["yaml"], alias: ["yml"]},
     {name: "Z80", mime: "text/x-z80", mode: "z80", ext: ["z80"]}
@@ -137,7 +172,7 @@
     if (info.mimes) info.mime = info.mimes[0];
   }
 
-  CodeMirror.findModeByMIME = function(mime) {
+  CodeMirror.findModeByMIME = function (mime) {
     mime = mime.toLowerCase();
     for (var i = 0; i < CodeMirror.modeInfo.length; i++) {
       var info = CodeMirror.modeInfo[i];
@@ -147,7 +182,7 @@
     }
   };
 
-  CodeMirror.findModeByExtension = function(ext) {
+  CodeMirror.findModeByExtension = function (ext) {
     for (var i = 0; i < CodeMirror.modeInfo.length; i++) {
       var info = CodeMirror.modeInfo[i];
       if (info.ext) for (var j = 0; j < info.ext.length; j++)
@@ -155,7 +190,7 @@
     }
   };
 
-  CodeMirror.findModeByFileName = function(filename) {
+  CodeMirror.findModeByFileName = function (filename) {
     for (var i = 0; i < CodeMirror.modeInfo.length; i++) {
       var info = CodeMirror.modeInfo[i];
       if (info.file && info.file.test(filename)) return info;
@@ -165,7 +200,7 @@
     if (ext) return CodeMirror.findModeByExtension(ext);
   };
 
-  CodeMirror.findModeByName = function(name) {
+  CodeMirror.findModeByName = function (name) {
     name = name.toLowerCase();
     for (var i = 0; i < CodeMirror.modeInfo.length; i++) {
       var info = CodeMirror.modeInfo[i];

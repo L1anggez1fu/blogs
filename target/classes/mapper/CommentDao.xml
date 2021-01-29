@@ -22,10 +22,5 @@
         where c.parent_comment_id = #{parentCommentId}
     </select>
 
-    <select id="getParentCommentById" resultType="com.lgzf.pojo.Comment">
-        select c.id,c.nickname,c.email,c.content,c.avatar,c.create_time,c.blog_id,c.parent_comment_id,c.reply_comment
-        from blog.t_comment c
-        where c.id = #{id}
-    </select>
 
 </mapper>

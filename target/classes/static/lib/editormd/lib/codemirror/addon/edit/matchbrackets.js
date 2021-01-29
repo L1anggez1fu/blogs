@@ -1,16 +1,16 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
 
-(function(mod) {
+(function (mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
     mod(require("../../lib/codemirror"));
   else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror"], mod);
   else // Plain browser env
     mod(CodeMirror);
-})(function(CodeMirror) {
+})(function (CodeMirror) {
   var ie_lt8 = /MSIE \d/.test(navigator.userAgent) &&
-    (document.documentMode == null || document.documentMode < 8);
+      (document.documentMode == null || document.documentMode < 8);
 
   var Pos = CodeMirror.Pos;
 
@@ -26,8 +26,10 @@
 
     var found = scanForBracket(cm, Pos(where.line, pos + (dir > 0 ? 1 : 0)), dir, style || null, config);
     if (found == null) return null;
-    return {from: Pos(where.line, pos), to: found && found.pos,
-            match: found && found.ch == match.charAt(0), forward: dir > 0};
+    return {
+      from: Pos(where.line, pos), to: found && found.pos,
+      match: found && found.ch == match.charAt(0), forward: dir > 0
+    };
   }
 
   // bracketRegex is used to specify which type of bracket to scan
@@ -44,7 +46,7 @@
     var stack = [];
     var re = config && config.bracketRegex ? config.bracketRegex : /[(){}[\]]/;
     var lineEnd = dir > 0 ? Math.min(where.line + maxScanLines, cm.lastLine() + 1)
-                          : Math.max(cm.firstLine() - 1, where.line - maxScanLines);
+        : Math.max(cm.firstLine() - 1, where.line - maxScanLines);
     for (var lineNo = where.line; lineNo != lineEnd; lineNo += dir) {
       var line = cm.getLine(lineNo);
       if (!line) continue;
@@ -83,8 +85,8 @@
       // input stops going to the textare whever this fires.
       if (ie_lt8 && cm.state.focused) cm.focus();
 
-      var clear = function() {
-        cm.operation(function() {
+      var clear = function () {
+        cm.operation(function () {
           for (var i = 0; i < marks.length; i++) marks[i].clear();
         });
       };
@@ -94,14 +96,18 @@
   }
 
   var currentlyHighlighted = null;
+
   function doMatchBrackets(cm) {
-    cm.operation(function() {
-      if (currentlyHighlighted) {currentlyHighlighted(); currentlyHighlighted = null;}
+    cm.operation(function () {
+      if (currentlyHighlighted) {
+        currentlyHighlighted();
+        currentlyHighlighted = null;
+      }
       currentlyHighlighted = matchBrackets(cm, false, cm.state.matchBrackets);
     });
   }
 
-  CodeMirror.defineOption("matchBrackets", false, function(cm, val, old) {
+  CodeMirror.defineOption("matchBrackets", false, function (cm, val, old) {
     if (old && old != CodeMirror.Init)
       cm.off("cursorActivity", doMatchBrackets);
     if (val) {
@@ -110,11 +116,13 @@
     }
   });
 
-  CodeMirror.defineExtension("matchBrackets", function() {matchBrackets(this, true);});
-  CodeMirror.defineExtension("findMatchingBracket", function(pos, strict, config){
+  CodeMirror.defineExtension("matchBrackets", function () {
+    matchBrackets(this, true);
+  });
+  CodeMirror.defineExtension("findMatchingBracket", function (pos, strict, config) {
     return findMatchingBracket(this, pos, strict, config);
   });
-  CodeMirror.defineExtension("scanForBracket", function(pos, dir, style, config){
+  CodeMirror.defineExtension("scanForBracket", function (pos, dir, style, config) {
     return scanForBracket(this, pos, dir, style, config);
   });
 });

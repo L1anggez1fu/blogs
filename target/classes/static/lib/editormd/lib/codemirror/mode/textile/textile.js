@@ -1,7 +1,7 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
 
-(function(mod) {
+(function (mod) {
   if (typeof exports == "object" && typeof module == "object") { // CommonJS
     mod(require("../../lib/codemirror"));
   } else if (typeof define == "function" && define.amd) { // AMD
@@ -9,7 +9,7 @@
   } else { // Plain browser env
     mod(CodeMirror);
   }
-})(function(CodeMirror) {
+})(function (CodeMirror) {
   "use strict";
 
   var TOKEN_STYLES = {
@@ -126,7 +126,7 @@
         return type;
       }
     } else if ((!charBefore || /\W/.test(charBefore)) && charAfter && /\S/.test(charAfter) &&
-               stream.match(new RegExp("^.*\\S" + closeRE.source + "(?:\\W|$)"), false)) {
+        stream.match(new RegExp("^.*\\S" + closeRE.source + "(?:\\W|$)"), false)) {
       state[phraseModifier] = true;
       state.mode = Modes.attributes;
     }
@@ -141,8 +141,8 @@
     if (state.layoutType) styles.push(TOKEN_STYLES[state.layoutType]);
 
     styles = styles.concat(activeStyles(
-      state, "addition", "bold", "cite", "code", "deletion", "em", "footCite",
-      "image", "italic", "link", "span", "strong", "sub", "sup", "table", "tableHeading"));
+        state, "addition", "bold", "cite", "code", "deletion", "em", "footCite",
+        "image", "italic", "link", "span", "strong", "sub", "sup", "table", "tableHeading"));
 
     if (state.layoutType === "header")
       styles.push(TOKEN_STYLES.header + "-" + state.header);
@@ -153,15 +153,15 @@
   function textileDisabled(state) {
     var type = state.layoutType;
 
-    switch(type) {
-    case "notextile":
-    case "code":
-    case "pre":
-      return TOKEN_STYLES[type];
-    default:
-      if (state.notextile)
-        return TOKEN_STYLES.notextile + (type ? (" " + TOKEN_STYLES[type]) : "");
-      return null;
+    switch (type) {
+      case "notextile":
+      case "code":
+      case "pre":
+        return TOKEN_STYLES[type];
+      default:
+        if (state.notextile)
+          return TOKEN_STYLES.notextile + (type ? (" " + TOKEN_STYLES[type]) : "");
+        return null;
     }
   }
 
@@ -229,42 +229,42 @@
       pad: /(?:\(+|\)+){1,2}/,
       css: /\{[^\}]+\}/
     },
-    createRe: function(name) {
+    createRe: function (name) {
       switch (name) {
-      case "drawTable":
-        return REs.makeRe("^", REs.single.drawTable, "$");
-      case "html":
-        return REs.makeRe("^", REs.single.html, "(?:", REs.single.html, ")*", "$");
-      case "linkDefinition":
-        return REs.makeRe("^", REs.single.linkDefinition, "$");
-      case "listLayout":
-        return REs.makeRe("^", REs.single.list, RE("allAttributes"), "*\\s+");
-      case "tableCellAttributes":
-        return REs.makeRe("^", REs.choiceRe(REs.single.tableCellAttributes,
-                                            RE("allAttributes")), "+\\.");
-      case "type":
-        return REs.makeRe("^", RE("allTypes"));
-      case "typeLayout":
-        return REs.makeRe("^", RE("allTypes"), RE("allAttributes"),
-                          "*\\.\\.?", "(\\s+|$)");
-      case "attributes":
-        return REs.makeRe("^", RE("allAttributes"), "+");
+        case "drawTable":
+          return REs.makeRe("^", REs.single.drawTable, "$");
+        case "html":
+          return REs.makeRe("^", REs.single.html, "(?:", REs.single.html, ")*", "$");
+        case "linkDefinition":
+          return REs.makeRe("^", REs.single.linkDefinition, "$");
+        case "listLayout":
+          return REs.makeRe("^", REs.single.list, RE("allAttributes"), "*\\s+");
+        case "tableCellAttributes":
+          return REs.makeRe("^", REs.choiceRe(REs.single.tableCellAttributes,
+              RE("allAttributes")), "+\\.");
+        case "type":
+          return REs.makeRe("^", RE("allTypes"));
+        case "typeLayout":
+          return REs.makeRe("^", RE("allTypes"), RE("allAttributes"),
+              "*\\.\\.?", "(\\s+|$)");
+        case "attributes":
+          return REs.makeRe("^", RE("allAttributes"), "+");
 
-      case "allTypes":
-        return REs.choiceRe(REs.single.div, REs.single.foot,
-                            REs.single.header, REs.single.bc, REs.single.bq,
-                            REs.single.notextile, REs.single.pre, REs.single.table,
-                            REs.single.para);
+        case "allTypes":
+          return REs.choiceRe(REs.single.div, REs.single.foot,
+              REs.single.header, REs.single.bc, REs.single.bq,
+              REs.single.notextile, REs.single.pre, REs.single.table,
+              REs.single.para);
 
-      case "allAttributes":
-        return REs.choiceRe(REs.attributes.selector, REs.attributes.css,
-                            REs.attributes.lang, REs.attributes.align, REs.attributes.pad);
+        case "allAttributes":
+          return REs.choiceRe(REs.attributes.selector, REs.attributes.css,
+              REs.attributes.lang, REs.attributes.align, REs.attributes.pad);
 
-      default:
-        return REs.makeRe("^", REs.single[name]);
+        default:
+          return REs.makeRe("^", REs.single[name]);
       }
     },
-    makeRe: function() {
+    makeRe: function () {
       var pattern = "";
       for (var i = 0; i < arguments.length; ++i) {
         var arg = arguments[i];
@@ -272,7 +272,7 @@
       }
       return new RegExp(pattern);
     },
-    choiceRe: function() {
+    choiceRe: function () {
       var parts = [arguments[0]];
       for (var i = 1; i < arguments.length; ++i) {
         parts[i * 2 - 1] = "|";
@@ -290,7 +290,7 @@
   }
 
   var Modes = {
-    newLayout: function(stream, state) {
+    newLayout: function (stream, state) {
       if (stream.match(RE("typeLayout"), false)) {
         state.spanningLayout = false;
         return (state.mode = Modes.blockType)(stream, state);
@@ -311,7 +311,7 @@
       return (state.mode = (newMode || Modes.text))(stream, state);
     },
 
-    blockType: function(stream, state) {
+    blockType: function (stream, state) {
       var match, type;
       state.layoutType = null;
 
@@ -343,7 +343,7 @@
       return tokenStyles(state);
     },
 
-    text: function(stream, state) {
+    text: function (stream, state) {
       if (stream.match(RE("text"))) return tokenStyles(state);
 
       var ch = stream.next();
@@ -352,7 +352,7 @@
       return handlePhraseModifier(stream, state, ch);
     },
 
-    attributes: function(stream, state) {
+    attributes: function (stream, state) {
       state.mode = Modes.layoutLength;
 
       if (stream.match(RE("attributes")))
@@ -361,7 +361,7 @@
         return tokenStyles(state);
     },
 
-    layoutLength: function(stream, state) {
+    layoutLength: function (stream, state) {
       if (stream.eat(".") && stream.eat("."))
         state.spanningLayout = true;
 
@@ -369,7 +369,7 @@
       return tokenStyles(state);
     },
 
-    list: function(stream, state) {
+    list: function (stream, state) {
       var match = stream.match(RE("list"));
       state.listDepth = match[0].length;
       var listMod = (state.listDepth - 1) % 3;
@@ -384,7 +384,7 @@
       return tokenStyles(state);
     },
 
-    link: function(stream, state) {
+    link: function (stream, state) {
       state.mode = Modes.text;
       if (stream.match(RE("link"))) {
         stream.match(/\S+/);
@@ -393,12 +393,12 @@
       return tokenStyles(state);
     },
 
-    linkDefinition: function(stream, state) {
+    linkDefinition: function (stream, state) {
       stream.skipToEnd();
       return tokenStylesWith(state, TOKEN_STYLES.linkDefinition);
     },
 
-    definitionList: function(stream, state) {
+    definitionList: function (stream, state) {
       stream.match(RE("definitionList"));
 
       state.layoutType = "definitionList";
@@ -411,17 +411,17 @@
       return tokenStyles(state);
     },
 
-    html: function(stream, state) {
+    html: function (stream, state) {
       stream.skipToEnd();
       return tokenStylesWith(state, TOKEN_STYLES.html);
     },
 
-    table: function(stream, state) {
+    table: function (stream, state) {
       state.layoutType = "table";
       return (state.mode = Modes.tableCell)(stream, state);
     },
 
-    tableCell: function(stream, state) {
+    tableCell: function (stream, state) {
       if (stream.match(RE("tableHeading")))
         state.tableHeading = true;
       else
@@ -431,7 +431,7 @@
       return tokenStyles(state);
     },
 
-    tableCellAttributes: function(stream, state) {
+    tableCellAttributes: function (stream, state) {
       state.mode = Modes.tableText;
 
       if (stream.match(RE("tableCellAttributes")))
@@ -440,7 +440,7 @@
         return tokenStyles(state);
     },
 
-    tableText: function(stream, state) {
+    tableText: function (stream, state) {
       if (stream.match(RE("tableText")))
         return tokenStyles(state);
 
@@ -452,12 +452,12 @@
     }
   };
 
-  CodeMirror.defineMode("textile", function() {
+  CodeMirror.defineMode("textile", function () {
     return {
-      startState: function() {
-        return { mode: Modes.newLayout };
+      startState: function () {
+        return {mode: Modes.newLayout};
       },
-      token: function(stream, state) {
+      token: function (stream, state) {
         if (stream.sol()) startNewLine(stream, state);
         return state.mode(stream, state);
       },

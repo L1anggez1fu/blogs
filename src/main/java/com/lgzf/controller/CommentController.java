@@ -29,7 +29,7 @@ public class CommentController {
 
     @Value("${comment.avatar}")
     private String avatar;
-
+    /*根据blogId获得博客下的评论*/
     @GetMapping("/comments/{blogId}")
     public String comments(@PathVariable Long blogId, Model model) {
         List<Comment> comments = commentService.listCommentByBlogId(blogId);
@@ -46,6 +46,7 @@ public class CommentController {
         return "blog :: commentList";
     }
 
+    /*提交评论*/
     @PostMapping("/comments")
     public String post(Comment comment, HttpSession session) {
         Long blogId = comment.getBlogId();

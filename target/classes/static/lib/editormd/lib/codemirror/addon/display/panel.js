@@ -1,15 +1,15 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
 
-(function(mod) {
+(function (mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
     mod(require("../../lib/codemirror"));
   else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror"], mod);
   else // Plain browser env
     mod(CodeMirror);
-})(function(CodeMirror) {
-  CodeMirror.defineExtension("addPanel", function(node, options) {
+})(function (CodeMirror) {
+  CodeMirror.defineExtension("addPanel", function (node, options) {
     if (!this.state.panels) initPanels(this);
 
     var info = this.state.panels;
@@ -31,7 +31,7 @@
     this.cleared = false;
   }
 
-  Panel.prototype.clear = function() {
+  Panel.prototype.clear = function () {
     if (this.cleared) return;
     this.cleared = true;
     var info = this.cm.state.panels;
@@ -40,7 +40,7 @@
     if (--info.panels == 0) removePanels(this.cm);
   };
 
-  Panel.prototype.changed = function(height) {
+  Panel.prototype.changed = function (height) {
     var newHeight = height == null ? this.node.offsetHeight : height;
     var info = this.cm.state.panels;
     this.cm._setSize(null, info.height += (newHeight - this.height));
@@ -63,7 +63,7 @@
     if (hasFocus) cm.focus();
 
     cm._setSize = cm.setSize;
-    if (height != null) cm.setSize = function(width, newHeight) {
+    if (height != null) cm.setSize = function (width, newHeight) {
       if (newHeight == null) return this._setSize(width, newHeight);
       info.setHeight = newHeight;
       if (typeof newHeight != "number") {

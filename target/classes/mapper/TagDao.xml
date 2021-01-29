@@ -34,7 +34,7 @@
         where t.id = bt.tag_id and b.id = bt.blog_id
     </select>
 
-    <delete id="deleteTag" >
+    <delete id="deleteTag">
         delete from blog.t_tag where id = #{id}
     </delete>
 

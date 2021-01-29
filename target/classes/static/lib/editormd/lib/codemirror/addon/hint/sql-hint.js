@@ -1,14 +1,14 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
 
-(function(mod) {
+(function (mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
     mod(require("../../lib/codemirror"), require("../../mode/sql/sql"));
   else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror", "../../mode/sql/sql"], mod);
   else // Plain browser env
     mod(CodeMirror);
-})(function(CodeMirror) {
+})(function (CodeMirror) {
   "use strict";
 
   var tables;
@@ -102,12 +102,12 @@
 
     // Try to complete table names
     var string = nameParts.join(".");
-    addMatches(result, string, tables, function(w) {
+    addMatches(result, string, tables, function (w) {
       return useBacktick ? insertBackticks(w) : w;
     });
 
     // Try to complete columns from defaultTable
-    addMatches(result, string, defaultTable, function(w) {
+    addMatches(result, string, defaultTable, function (w) {
       return useBacktick ? insertBackticks(w) : w;
     });
 
@@ -124,7 +124,7 @@
       columns = columns.columns;
 
     if (columns) {
-      addMatches(result, string, columns, function(w) {
+      addMatches(result, string, columns, function (w) {
         if (typeof w == "string") {
           w = table + "." + w;
         } else {
@@ -143,7 +143,7 @@
     var excepted = /[,;]/g;
     var words = lineText.split(" ");
     for (var i = 0; i < words.length; i++) {
-      f(words[i]?words[i].replace(excepted, '') : '');
+      f(words[i] ? words[i].replace(excepted, '') : '');
     }
   }
 
@@ -170,9 +170,9 @@
 
     //add separator
     var indexOfSeparator = fullQuery.indexOf(CONS.QUERY_DIV);
-    while(indexOfSeparator != -1) {
+    while (indexOfSeparator != -1) {
       separator.push(doc.posFromIndex(indexOfSeparator));
-      indexOfSeparator = fullQuery.indexOf(CONS.QUERY_DIV, indexOfSeparator+1);
+      indexOfSeparator = fullQuery.indexOf(CONS.QUERY_DIV, indexOfSeparator + 1);
     }
     separator.unshift(Pos(0, 0));
     separator.push(Pos(editor.lastLine(), editor.getLineHandle(editor.lastLine()).text.length));
@@ -180,10 +180,10 @@
     //find valid range
     var prevItem = 0;
     var current = convertCurToNumber(editor.getCursor());
-    for (var i=0; i< separator.length; i++) {
+    for (var i = 0; i < separator.length; i++) {
       var _v = convertCurToNumber(separator[i]);
       if (current > prevItem && current <= _v) {
-        validRange = { start: convertNumberToCur(prevItem), end: convertNumberToCur(_v) };
+        validRange = {start: convertNumberToCur(prevItem), end: convertNumberToCur(_v)};
         break;
       }
       prevItem = _v;
@@ -193,7 +193,7 @@
 
     for (var i = 0; i < query.length; i++) {
       var lineText = query[i];
-      eachWord(lineText, function(word) {
+      eachWord(lineText, function (word) {
         var wordUpperCase = word.toUpperCase();
         if (wordUpperCase === aliasUpperCase && getItem(tables, previousWord))
           table = previousWord;
@@ -205,7 +205,7 @@
     return table;
   }
 
-  CodeMirror.registerHelper("hint", "sql", function(editor, options) {
+  CodeMirror.registerHelper("hint", "sql", function (editor, options) {
     tables = (options && options.tables) || {};
     var defaultTableName = options && options.defaultTable;
     defaultTable = (defaultTableName && getItem(tables, defaultTableName)) || [];
@@ -230,9 +230,15 @@
     if (search.charAt(0) == "." || search.charAt(0) == "`") {
       start = nameCompletion(cur, token, result, editor);
     } else {
-      addMatches(result, search, tables, function(w) {return w;});
-      addMatches(result, search, defaultTable, function(w) {return w;});
-      addMatches(result, search, keywords, function(w) {return w.toUpperCase();});
+      addMatches(result, search, tables, function (w) {
+        return w;
+      });
+      addMatches(result, search, defaultTable, function (w) {
+        return w;
+      });
+      addMatches(result, search, keywords, function (w) {
+        return w.toUpperCase();
+      });
     }
 
     return {list: result, from: Pos(cur.line, start), to: Pos(cur.line, end)};

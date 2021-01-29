@@ -20,4 +20,4 @@ pagehelper:
   params: count=countSql
 
 
-comment.avatar: /images/121.png
+comment.avatar: /images/ava.jpg
