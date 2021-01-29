@@ -23,6 +23,8 @@
 ### 数据库
 - MySQL 8.0.18
 
+## 项目demo
+![image](https://github.com/doublecharacters/blogs/blob/master/demo.PNG)
 
 ​	
 ## 注
